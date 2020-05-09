@@ -11,6 +11,9 @@
   "dependencies": {
     "johnny-five": "^1.4.0",
     "mcp-spi-adc": "^3.1.0",
+    "node-omxplayer": "^0.6.1",
+    "omxplayer-node": "^0.7.6",
+    "onoff": "^6.0.0",
     "raspi-io": "^11.0.0"
   }
 }
