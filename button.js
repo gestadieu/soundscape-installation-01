@@ -1,31 +1,51 @@
-const {RaspiIO} = require('raspi-io');
-const five = require('johnny-five');
+const { RaspiIO } = require("raspi-io");
+const five = require("johnny-five");
 
 const board = new five.Board({
-  io: new RaspiIO()
+  io: new RaspiIO(),
 });
 
-board.on('ready', () => {
+board.on("ready", () => {
   // GPIO18 - Physical Pin P1-12 - Wiring Pi 1
-  button = new five.Button({
-    pin: 'P1-12',
-    isPullup: true
+  const button = new five.Button({
+    pin: "P1-12",
+    isPullup: true,
   });
 
-  button.on('down', () => {
-    console.log('down...')
-  })
+  const led = new five.Led("P1-7");
+  led.strobe();
 
-  button.on('up', () => {
-    console.log('up...')
-  })
+  button.on("down", () => {
+    console.log("down...");
+  });
 
-  button.on('hold', () => {
-    console.log('hold...')
-  })
+  button.on("up", () => {
+    console.log("up...");
+  });
 
-  board.on('exit', ()=> {
-    console.log('bye...')
-  })
-  
-})
+  button.on("hold", () => {
+    console.log("hold...");
+  });
+
+  this.repl.inject({
+    on: () => {
+      led.on();
+    },
+    off: () => {
+      led.stop().off();
+    },
+    strobe: () => {
+      led.stop().off();
+      led.strobe();
+    },
+    blink: () => {
+      led.stop().off();
+      led.blink(500);
+    },
+  });
+  // When this script is stopped, turn the LED off
+  // This is just for convenience
+  this.on("exit", function () {
+    led.stop().off();
+  });
+});
