@@ -48,4 +48,10 @@ board.on("ready", () => {
   board.on("exit", function () {
     // led.stop().off();
   });
+
+  this.repl.inject({
+    // led: function () {
+    //   led;
+    // },
+  });
 });

@@ -2,16 +2,15 @@ const { RaspiIO } = require("raspi-io");
 const five = require("johnny-five");
 const omx = require("node-omxplayer");
 
-var pigpio=require('pigpio');
-    pigpio.configureSocketPort(8890);
-    // var Gpio=pigpio.Gpio;
+let pigpio = require("pigpio");
+pigpio.configureSocketPort(8889);
 
 let player = omx();
-player.on('close', () => {
+player.on("close", () => {
   if (player.running) {
-  player.quit();
+    player.quit();
   }
-})
+});
 
 let level1 = 0,
   level2 = 0;
@@ -20,12 +19,11 @@ const board = new five.Board({
   io: new RaspiIO(),
 });
 
-
 board.on("ready", () => {
   // Button Pre-Pandemic
   // GPIO18 - Physical Pin P1-12 - Wiring Pi 1
   const button1 = new five.Button({
-    pin: 'P1-18',
+    pin: "P1-18",
     isPullup: true,
   });
 
@@ -66,8 +64,13 @@ board.on("ready", () => {
   //   console.log("  raw    : ", raw);
   //   console.log("-----------------");
   // five.Fn.map(500, 0, 1000, 0, 255); // --> 127
+
+  // OMX player
   // if (preValue < value) { player.volUp(); }
   // else { player.volDown(); }
+
+  // VLC player
+  // player.setVolume(value)            // Adjust player volume (value 0-100)
   // });
 
   // Joystick
@@ -88,6 +91,12 @@ board.on("ready", () => {
       player.quit();
     }
   });
+
+  // this.repl.inject({
+  //   led: function () {
+  //     led;
+  //   },
+  // });
 });
 
 function playVideo(nb) {
@@ -100,7 +109,7 @@ function playVideo(nb) {
   //   level1 = level2 = 0;
   // }
 
-  player.newSource('videos/1-01.mp4')
+  player.newSource("videos/1-01.mp4");
 
   // setTimeout(() => {
   //   player.quit();
