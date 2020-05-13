@@ -1,40 +1,49 @@
 const { RaspiIO } = require("raspi-io");
+const five = require("johnny-five");
+const omx = require("node-omxplayer");
 
-const { five, Expander, Sensor } = require("johnny-five");
+var pigpio=require('pigpio');
+    pigpio.configureSocketPort(8890);
+    // var Gpio=pigpio.Gpio;
+
+let player = omx();
+player.on('close', () => {
+  if (player.running) {
+  player.quit();
+  }
+})
+
+let level1 = 0,
+  level2 = 0;
 
 const board = new five.Board({
   io: new RaspiIO(),
 });
 
-const omx = require("node-omxplayer");
-let player = omx();
-
-let level1 = 0,
-  level2 = 0;
 
 board.on("ready", () => {
   // Button Pre-Pandemic
   // GPIO18 - Physical Pin P1-12 - Wiring Pi 1
   const button1 = new five.Button({
-    pin: 1,
+    pin: 'P1-18',
     isPullup: true,
   });
 
   // Button During Pandemic
-  const button2 = new five.Button({
-    pin: 2,
-    isPullup: true,
-  });
+  // const button2 = new five.Button({
+  //   pin: 'P1-16',
+  //   isPullup: true,
+  // });
 
   button1.on("down", () => {
     level1 = 1;
     playVideo();
   });
 
-  button2.on("down", () => {
-    level1 = 2;
-    playVideo();
-  });
+  // button2.on("down", () => {
+  //   level1 = 2;
+  //   playVideo();
+  // });
 
   // ADC Chip
   // const adc = new five.Board.Virtual(
@@ -86,12 +95,14 @@ function playVideo(nb) {
   // if (player.running) {
   //   player.pause();
   // }
-  if (level1 && level2) {
-    player.newSource(`videos/${level1}-0${level2}.mp4`);
-    level1 = level2 = 0;
-  }
+  // if (level1 && level2) {
+  //   player.newSource(`videos/${level1}-0${level2}.mp4`);
+  //   level1 = level2 = 0;
+  // }
 
-  //   setTimeout(() => {
-  //     player.quit();
-  // }, 2000)
+  player.newSource('videos/1-01.mp4')
+
+  // setTimeout(() => {
+  //   player.quit();
+  // }, 5000)
 }
