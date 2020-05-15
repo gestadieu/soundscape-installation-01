@@ -2,7 +2,7 @@
 // node-omxplayer
 // ------------------------------------------- 
 
-// const omx = require("node-omxplayer");
+const omx = require("node-omxplayer");
 // const player = omx();
 // player.newSource("videos/2-01.mp4");
 
@@ -15,15 +15,15 @@
 
 const PlayerController = require("media-player-controller");
 
-//let player = new PlayerController({ app: "mpv", setFullscreen: true });
-let player = new PlayerController({ app: "vlc" });
+// let player = new PlayerController({ app: "mpv", setFullscreen: true });
+let player = new PlayerController({ app: "mpv" });
 
-player.opts.media = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-// //player.opts.media = "videos/2-01.mp4";
+// player.opts.media = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+player.opts.media = "videos/1-01.mp4";
 // player.load("videos/1-01.mp4");
-//player.setFullscreen(true);
+//  player.setFullscreen(true);
 // player.setVolume(50);
-//player.keepOpen(true);
+// player.keepOpen(true);
 
 
 player.launch((err) => {
