@@ -1,19 +1,15 @@
 const { RaspiIO } = require("raspi-io");
 const five = require("johnny-five");
-const omx = require("node-omxplayer");
 const PlayerController = require("media-player-controller");
 
 // let pigpio = require("pigpio");
 // pigpio.configureSocketPort(8889);
 
-// let player = omx();
-// player.on("close", () => {
-//   if (player.running) {
-//     player.quit();
-//   }
-// });
-
-let player = new PlayerController({ app: "mpv" });
+let player = new PlayerController({ 
+  app: "mpv",
+  media: "videos/black.mp4",
+  args: ['--fullscreen=yes','--keep-open=yes']
+});
 
 let level1 = 0,
   level2 = 0;
@@ -109,7 +105,7 @@ function playVideo(nb) {
   //   player.pause();
   // }
   // if (level1 && level2) {
-  //   player.newSource(`videos/${level1}-0${level2}.mp4`);
+  //   player.load(`videos/${level1}-0${level2}.mp4`);
   //   level1 = level2 = 0;
   // }
 

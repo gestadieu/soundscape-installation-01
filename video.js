@@ -25,8 +25,11 @@ player.launch(err => {
   if(err) {
     return console.error(err.message);
   } else {
-    player.load('videos/2-01.mp4')
+    // player.load('videos/2-01.mp4')
     console.log('video loaded...')
+    setTimeout(() => {
+      player.load('videos/1-02.mp4')
+    }, 5000)
   }
 });
 
@@ -42,7 +45,8 @@ player.on('playback', (msg) => {
   console.log(msg)
   if (msg.name == 'eof-reached' && msg.value) {
     console.log('loading new video...')
-    player.load('videos/1-01.mp4')
+    // https://pixabay.com/videos/stars-glitter-sparkle-bright-light-37271/
+    player.load('videos/black.mp4')
   }
 });
 
